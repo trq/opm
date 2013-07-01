@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+OPM="`readlink -e ${0}`" ; export OPM
+OPM_DIR="`dirname ${OPM}`" ; export OPM_DIR
+
+. ${OPM_DIR}/../usr/lib/opm/utils.sh
+. ${OPM_DIR}/../usr/lib/opm/setup.sh
+. ${OPM_DIR}/../usr/lib/opm/usage.sh
+. ${OPM_DIR}/../usr/lib/opm/main.sh
+
+if [ -z "$2" ]; then
+    usage
+else
+    main "$2"
+fi
