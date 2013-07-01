@@ -1,1 +1,1 @@
-Other Pakcage Manager
+Other Package Manager
