@@ -1,0 +1,5 @@
+PACKAGE_VERSION="${1##*-}" ; export PACKAGE_VERSION
+rest="${1%-*}"
+PACKAGE_NAME="${rest##*/}" ; export PACKAGE_NAME
+CATEGORY="${1%%/*}" ; export CATEGORY
+PACKAGE=$PACKAGE_NAME-$PACKAGE_VERSION ; export PACKAGE
