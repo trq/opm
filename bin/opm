@@ -9,7 +9,9 @@ OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 . ${OPMDIR}/usr/lib/opm/main.sh
 . ${OPMDIR}/usr/lib/opm/libs.sh
 
-if [ -z "$2" ]; then
+if [ "$1" = "sync" ] ; then
+    opm_sync
+elif [ -z "$2" ]; then
     usage
 else
     ACTION=$2

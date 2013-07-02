@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+opm_sync() {
+    cd ${OPMDIR}
+    git submodule foreach git pull origin develop
+    git submodule update
+}
+
 src_clean() {
     if [ -d "${WORKDIR}" ]; then
         msg "Cleaning old sources ..."

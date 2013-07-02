@@ -7,6 +7,9 @@ main() {
     source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION"
 
     case "${ACTION}" in
+        sync)
+            opm_sync
+            ;;
         clean)
             src_clean
             ;;
