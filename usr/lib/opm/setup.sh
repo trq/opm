@@ -25,6 +25,7 @@ WORKDIR="${OPMDIR}/tmp/opm"
 INSTDIR="/${WORKDIR}/${PACKAGE}/inst" ; export INSTDIR  # Location package will be installed into
 WORKDIR="/${WORKDIR}/${PACKAGE}/work" ; export WORKDIR  # Location source will be unpacked to.
 
+# These should only be created when actually needed.
 install -d "$DISTDIR"
 install -d "$INSTDIR"
 install -d "$WORKDIR"
