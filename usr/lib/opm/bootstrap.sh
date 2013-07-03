@@ -7,11 +7,23 @@ DISTDIR="${OPMDIR}/var/opm/distfiles"
 WORKDIR="${OPMDIR}/tmp/opm"
 
 # Resolve package specific information
-CATEGORY="${1%%/*}"                     ; export CATEGORY
-PACKAGE_NAME="${1##*/}"                 ; export PACKAGE_NAME
-OPM_FILE=$(ls ${OPMS}/${CATEGORY}/${PACKAGE_NAME}/ | grep ^[0-9].*\.opm$ | tail -n1)
-PACKAGE_VERSION=${OPM_FILE%*.*}         ; export PACKAGE_VERSION
-PACKAGE=$PACKAGE_NAME-$PACKAGE_VERSION  ; export PACKAGE
+CATEGORY="${1%%/*}" ; export CATEGORY
+PACKAGE_NAME="${1##*/}"
+
+PACKAGE_VERSION="${PACKAGE_NAME#*-}"
+
+if ! [[ "$PACKAGE_VERSION" =~ ^[0-9] ]] ; then
+    opm_file=$(ls ${OPMS}/${CATEGORY}/${PACKAGE_NAME}/ | grep ^[0-9].*\.opm$ | tail -n1)
+    PACKAGE_VERSION=${opm_file%*.*}
+else
+    tmp="${PACKAGE_NAME%-*}"
+    PACKAGE_NAME="${tmp##*/}"
+fi
+
+export PACKAGE_NAME
+export PACKAGE_VERSION
+
+PACKAGE=$PACKAGE_NAME-$PACKAGE_VERSION ; export PACKAGE
 
 # Dynamically configure some defaults.
 NUMCPU="$(grep -c '^processor' /proc/cpuinfo)" ; export NUMCPU
