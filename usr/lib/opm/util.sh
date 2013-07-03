@@ -22,11 +22,11 @@ opm.util.source_file() {
 }
 
 opm.util.source_opm() {
-    if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/defaults" ]; then
-        opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "defaults"
+    if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/base.opm" ]; then
+        opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "base.opm"
     fi
 
-    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION"
+    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION.opm"
 }
 
 opm.util.requires_dir() {
