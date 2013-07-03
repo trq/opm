@@ -3,17 +3,17 @@
 OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
-. ${OPMDIR}/usr/lib/opm/utils.sh
-. ${OPMDIR}/usr/lib/opm/setup.sh
+. ${OPMDIR}/usr/lib/opm/util.sh
+. ${OPMDIR}/usr/lib/opm/bootstrap.sh
 . ${OPMDIR}/usr/lib/opm/usage.sh
 . ${OPMDIR}/usr/lib/opm/main.sh
-. ${OPMDIR}/usr/lib/opm/libs.sh
+. ${OPMDIR}/usr/lib/opm/lib.sh
 
 if [ "$1" = "sync" ] ; then
-    opm_sync
+    opm.sync
 elif [ -z "$2" ]; then
-    usage
+    opm.usage
 else
     ACTION=$2
-    main
+    opm.main
 fi
