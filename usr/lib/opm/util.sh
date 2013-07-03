@@ -3,9 +3,18 @@
 umask 022
 unalias -a
 
+RESTORE='\033[0m'
+RED='\033[00;31m'
+GREEN='\033[00;32m'
+YELLOW='\033[00;33m'
+CYAN='\033[00;36m'
+
 #global util
-die() { echo -e "\033[1;31m$@ \033[0m" 1>&2; exit 1; }
-msg() { echo -e "\033[1;32m$@ \033[0m"; }
+msg() { echo -e "${CYAN}${@}${RESTORE}"; }
+success() { echo -e "${GREEN}${@}${RESTORE}"; }
+warn() { echo -e "${YELLOW}${@}${RESTORE}"; }
+error() { echo -e "${RED}${@}${RESTORE}" >&2; }
+die() { error "$@"; exit 1; }
 try() { "$@" || die "Error running command: $@"; }
 
 # opm util

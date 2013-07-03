@@ -61,15 +61,7 @@ opm.unpack() {
 
     [ ! -d "$SOURCEDIR" ] && die "Source directory $SOURCEDIR specified in \$SOURCEDIR does not exist. Exiting."
 
-    # We should cd into $SOURCEDIR before src_configure is done or ebuild will fail when we override src_configure with an ebuild.
-    # like into e2fsprogs-1.18.ebuild.
     cd "$SOURCEDIR"
-}
-
-opm.compile() {
-    msg "Compiling source ..."
-    # Shoudn't we drop MAKEOPTS in favor of MAKEFLAGS variable which make use by default?
-    cd "$SOURCEDIR"; try make "$MAKEOPTS"
 }
 
 opm.configure() {
@@ -85,9 +77,17 @@ opm.configure() {
         "$@"
 }
 
+opm.compile() {
+    msg "Compiling source ..."
+    # Shoudn't we drop MAKEOPTS in favor of MAKEFLAGS variable which make use by default?
+    cd "$SOURCEDIR";
+    try make "$MAKEOPTS"
+}
+
 opm.install() {
     opm.util.requires_dir ${INSTDIR}
 
     msg "Installing into '$INSTDIR' ..."
-    cd "$SOURCEDIR"; try make DESTDIR="$INSTDIR" install
+    cd "$SOURCEDIR";
+    try make DESTDIR="$INSTDIR" install
 }
