@@ -1,49 +1,47 @@
-main() {
-
+opm.main() {
     case "${ACTION}" in
         sync)
-            opm_sync
+            opm.sync
             ;;
         clean)
-            src_clean
+            opm.clean
             ;;
         fetch)
-            source_opm
+            opm.util.source_opm
             src_fetch
             ;;
         unpack)
-            src_clean
-            source_opm
-            src_fetch
-            src_unpack
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
             ;;
         configure)
-            src_clean
-            source_opm
-            src_fetch
-            src_unpack
-            src_configure
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
+            opm.configure
             ;;
         compile)
-            src_clean
-            source_opm
-            src_fetch
-            src_unpack
-            src_configure
-            src_compile
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
+            opm.configure
+            opm.compile
             ;;
-        install|all)
-            src_clean
-            source_opm
-            src_fetch
-            src_unpack
-            src_configure
-            src_compile
-            src_install
+        install)
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
+            opm.configure
+            opm.compile
+            opm.install
             ;;
         *)
             die "Please specify unpack, configure, compile or all as the second arg"
             ;;
     esac
-
 }
