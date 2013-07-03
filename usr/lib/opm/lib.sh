@@ -22,6 +22,14 @@ opm.fetch() {
                     if ! [ -s "${DISTDIR}/${source##*/}" ]; then
                         rm -f "${DISTDIR}/${source##*/}"
                         die "Unable to fetch ${source##*/}."
+                    else
+                        if ! [ -z $checksum ] ; then
+                            md5=$(md5sum ${DISTDIR}/${source##*/} | awk '{print $1}')
+                            if ! [ "${md5}" = "${checksum}" ] ; then
+                                rm -f "${DISTDIR}/${source##*/}"
+                                die "Checksum mismatch, try fetching again."
+                            fi
+                        fi
                     fi
                 ;;
                 *)
