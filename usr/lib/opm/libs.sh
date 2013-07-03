@@ -6,15 +6,15 @@ opm_sync() {
 }
 
 src_clean() {
-    if [ -d "${WORKDIR}" ]; then
+    if [ -d "${SANDBOX}" ]; then
         msg "Cleaning old sources ..."
-        rm -rf "${WORKDIR}"
+        rm -rf "${SANDBOX}"
     fi
-    install -d "${WORKDIR}"; cd "${WORKDIR}"
 }
 
 src_fetch() {
-    # todo: need checksum check or something.
+    requires_dir ${DISTDIR}
+
     for source in "${sources[@]}"; do
         if ! [ -f "${DISTDIR}/${source##*/}" ]; then
             case "${source}" in
@@ -35,9 +35,9 @@ src_fetch() {
 }
 
 src_unpack() {
-    echo "in unpack"
+    requires_dir ${DISTDIR} ${WORKDIR}
+
     for source in "${sources[@]}"; do
-        echo "processing $source"
         if ! [ -f "${DISTDIR}/${source##*/}" ]; then die "Missing source '${source##*/}'."; fi
 
         case "${source##*/}" in
@@ -72,6 +72,8 @@ src_configure() {
 }
 
 src_install() {
+    requires_dir ${INSTDIR}
+
     msg "Installing into '$INSTDIR' ..."
     cd "$SOURCEDIR"; try make DESTDIR="$INSTDIR" install
 }
