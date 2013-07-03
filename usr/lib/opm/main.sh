@@ -1,11 +1,5 @@
 main() {
 
-    if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/defaults" ]; then
-        source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "defaults"
-    fi
-
-    source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION"
-
     case "${ACTION}" in
         sync)
             opm_sync
@@ -14,21 +8,25 @@ main() {
             src_clean
             ;;
         fetch)
+            source_opm
             src_fetch
             ;;
         unpack)
             src_clean
+            source_opm
             src_fetch
             src_unpack
             ;;
         configure)
             src_clean
+            source_opm
             src_fetch
             src_unpack
             src_configure
             ;;
         compile)
             src_clean
+            source_opm
             src_fetch
             src_unpack
             src_configure
@@ -36,6 +34,7 @@ main() {
             ;;
         install|all)
             src_clean
+            source_opm
             src_fetch
             src_unpack
             src_configure
