@@ -1,3 +1,0 @@
-[submodule "var/opm/opms"]
-	path = var/opm/opms
-	url = https://github.com/trq/opms.git
