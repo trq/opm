@@ -14,42 +14,47 @@ opm.fetch() {
     opm.util.requires_dir ${DISTDIR}
 
     for source in "${sources[@]}"; do
-        if ! [ -f "${DISTDIR}/${source##*/}" ]; then
+        if [ -z "$archive" ]; then archive=${sources##*/}; fi
+
+        if ! [ -f "${DISTDIR}/${archive}" ]; then
             case "${source}" in
                 http://*|https://*)
-                    msg "Fetching ${source##*/} ..."
-                    wget "${source}" -O "${DISTDIR}/${source##*/}"
-                    if ! [ -s "${DISTDIR}/${source##*/}" ]; then
-                        rm -f "${DISTDIR}/${source##*/}"
-                        die "Unable to fetch ${source##*/}."
+                    msg "Fetching ${archive} ..."
+                    wget "${source}" -O "${DISTDIR}/${archive}"
+                    if ! [ -s "${DISTDIR}/${archive}" ]; then
+                        rm -f "${DISTDIR}/${archive}"
+                        die "Unable to fetch ${archive}."
                     else
                         if ! [ -z $checksum ] ; then
-                            md5=$(md5sum ${DISTDIR}/${source##*/} | awk '{print $1}')
+                            md5=$(md5sum ${DISTDIR}/${archive} | awk '{print $1}')
                             if ! [ "${md5}" = "${checksum}" ] ; then
-                                rm -f "${DISTDIR}/${source##*/}"
+                                rm -f "${DISTDIR}/${archive}"
                                 die "Checksum mismatch, try fetching again."
                             fi
                         fi
                     fi
                 ;;
                 *)
-                    die "You have to provide '${source##*/}'."
+                    die "You have to provide '${archive}'."
                 ;;
             esac
         fi
-    done; unset source
+    done;
+    unset source
 }
 
 opm.unpack() {
     opm.util.requires_dir ${DISTDIR} ${WORKDIR}
 
     for source in "${sources[@]}"; do
-        if ! [ -f "${DISTDIR}/${source##*/}" ]; then die "Missing source '${source##*/}'."; fi
+        if [ -z "$archive" ]; then archive=${sources##*/}; fi
+
+        if ! [ -f "${DISTDIR}/${archive}" ]; then die "Missing source '${archive}'."; fi
 
         case "${source##*/}" in
             *.tar|*.tar.bz2|*.tar.xz|*.tar.gz|l*.tar.lzma)
-                msg "Extracting ${DISTDIR}/"${source##*/}" ..."
-                try tar xf "${DISTDIR}/${source##*/}" -C "${WORKDIR}"
+                msg "Extracting ${DISTDIR}/"${archive}" ..."
+                try tar xf "${DISTDIR}/${archive}" -C "${WORKDIR}"
             ;;
             *)
                 die "Unsupported format."

@@ -8,7 +8,7 @@ opm.main() {
             ;;
         fetch)
             opm.util.source_opm
-            src_fetch
+            opm.fetch
             ;;
         unpack)
             opm.clean
