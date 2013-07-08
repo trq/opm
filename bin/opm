@@ -4,7 +4,6 @@ OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
 . ${OPMDIR}/usr/lib/opm/util.sh
-. ${OPMDIR}/usr/lib/opm/bootstrap.sh
 . ${OPMDIR}/usr/lib/opm/usage.sh
 . ${OPMDIR}/usr/lib/opm/main.sh
 . ${OPMDIR}/usr/lib/opm/lib.sh
@@ -15,5 +14,6 @@ elif [ -z "$2" ]; then
     opm.usage
 else
     ACTION=$2
+    . ${OPMDIR}/usr/lib/opm/bootstrap.sh
     opm.main
 fi
