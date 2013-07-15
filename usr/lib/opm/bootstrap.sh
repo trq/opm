@@ -4,6 +4,8 @@ ORIGDIR="$(pwd)"
 # Create directory locations
 OPMS="${OPMDIR}/var/opm/opms"
 DISTDIR="${OPMDIR}/var/opm/distfiles"
+PKGDIR="${OPMDIR}/var/opm/packages"
+METADIR="${OPMDIR}/var/opm/meta"
 WORKDIR="${OPMDIR}/tmp/opm"
 
 # Resolve package specific information
