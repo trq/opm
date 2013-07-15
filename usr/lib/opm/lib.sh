@@ -96,3 +96,33 @@ opm.install() {
     cd "$SOURCEDIR";
     try make DESTDIR="$INSTDIR" install
 }
+
+opm.package() {
+    opm.util.requires_dir ${INSTDIR} ${PKGDIR}
+
+    cd ${INSTDIR}
+    msg "Packaging '$INSTDIR' ..."
+    tar cvzf ${PKGDIR}/${PACKAGE}.tar.gz .
+}
+
+opm.merge() {
+    opm.util.requires_dir ${METADIR}
+
+    if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
+        msg "Merging '${PACKAGE}' into / ..."
+        sudo tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C / > ${METADIR}/${PACKAGE}.installed
+    fi
+}
+
+opm.unmerge() {
+    opm.util.requires_dir ${METADIR}
+
+    cd /
+
+    if [ -f ${METADIR}/${PACKAGE}.installed ]; then
+        for file in $(cat ${METADIR}/${PACKAGE}.installed) ; do
+            msg "Removing '${file}' ..."
+            rm ${file}
+        done
+    fi
+}

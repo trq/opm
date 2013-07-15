@@ -40,6 +40,30 @@ opm.main() {
             opm.compile
             opm.install
             ;;
+        package)
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
+            opm.configure
+            opm.compile
+            opm.install
+            opm.package
+            ;;
+        merge)
+            opm.clean
+            opm.util.source_opm
+            opm.fetch
+            opm.unpack
+            opm.configure
+            opm.compile
+            opm.install
+            opm.package
+            opm.merge
+            ;;
+        unmerge)
+            opm.unmerge
+            ;;
         *)
             die "Please specify unpack, configure, compile or all as the second arg"
             ;;
