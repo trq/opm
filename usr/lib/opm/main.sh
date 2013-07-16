@@ -11,57 +11,31 @@ opm.main() {
             opm.fetch
             ;;
         unpack)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
             opm.unpack
             ;;
         configure)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
-            opm.unpack
             opm.configure
             ;;
         compile)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
-            opm.unpack
-            opm.configure
             opm.compile
             ;;
         install)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
-            opm.unpack
-            opm.configure
-            opm.compile
             opm.install
             ;;
         package)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
-            opm.unpack
-            opm.configure
-            opm.compile
-            opm.install
             opm.package
             ;;
         merge)
-            opm.clean
             opm.util.source_opm
-            opm.fetch
-            opm.unpack
-            opm.configure
-            opm.compile
-            opm.install
-            opm.package
             opm.merge
             ;;
         unmerge)
+            opm.util.source_opm
             opm.unmerge
             ;;
         *)

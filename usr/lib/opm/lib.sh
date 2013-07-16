@@ -54,7 +54,7 @@ opm.unpack() {
         case "${source##*/}" in
             *.tar|*.tar.bz2|*.tar.xz|*.tar.gz|l*.tar.lzma)
                 msg "Extracting ${DISTDIR}/"${archive}" ..."
-                try tar xf "${DISTDIR}/${archive}" -C "${WORKDIR}"
+                try tar xvf "${DISTDIR}/${archive}" -C "${WORKDIR}"
             ;;
             *)
                 die "Unsupported format."
@@ -71,8 +71,10 @@ opm.unpack() {
 
 opm.configure() {
     msg "Configuring source ..."
-    cd "$SOURCEDIR"; [ -e ./configure ] && try ./configure \
-        --prefix=/usr \
+    cd "$SOURCEDIR";
+
+    [ -e ./configure ] && try ./configure \
+        --prefix=${CONFIG_PREFIX:-/usr} \
         --mandir=/usr/share/man \
         --infodir=/usr/share/info \
         --datadir=/usr/share \
@@ -110,7 +112,7 @@ opm.merge() {
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
         msg "Merging '${PACKAGE}' into / ..."
-        sudo tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C / > ${METADIR}/${PACKAGE}.installed
+        sudo tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
     fi
 }
 
