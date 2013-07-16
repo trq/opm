@@ -69,6 +69,10 @@ opm.unpack() {
     cd "$SOURCEDIR"
 }
 
+opm.prepare() {
+    return
+}
+
 opm.configure() {
     msg "Configuring source ..."
     cd "$SOURCEDIR";

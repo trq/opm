@@ -15,6 +15,9 @@ opm.main() {
             unpack)
                 opm.unpack
                 ;;
+            prepare)
+                opm.prepare
+                ;;
             configure)
                 opm.configure
                 ;;
