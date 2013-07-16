@@ -33,9 +33,15 @@ if [ -z "${MAKEOPTS}" ]; then
     export MAKEOPTS="--jobs=$NUMCPU"
 fi
 
+TARGETFS=/ ; export TARGETFS
+
 ## Laoad external config file.
-if [ -f $OPMDIR/etc/opm.conf ] ; then
-    . $OPMDIR/etc/opm.conf
+if [ -f ~/.opm.conf ] ; then
+    . ~/.opm.conf
+fi
+
+if [ -f /etc/opm.conf ] ; then
+    . /etc/opm.conf
 fi
 
 # Working area.
