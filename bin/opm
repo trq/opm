@@ -13,7 +13,6 @@ if [ "$1" = "sync" ] ; then
 elif [ -z "$2" ]; then
     opm.usage
 else
-    ACTION=$2
     . ${OPMDIR}/usr/lib/opm/bootstrap.sh
-    opm.main
+    opm.main $@
 fi
