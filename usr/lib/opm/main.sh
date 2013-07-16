@@ -33,6 +33,17 @@ opm.main() {
             merge)
                 opm.merge
                 ;;
+            add)
+                opm.clean
+                opm.fetch
+                opm.unpack
+                opm.prepare
+                opm.configure
+                opm.compile
+                opm.install
+                opm.package
+                opm.merge
+                ;;
             unmerge)
                 opm.unmerge
                 ;;
