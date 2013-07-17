@@ -46,6 +46,7 @@ fi
 
 # Working area.
 SANDBOX="${WORKDIR}/${PACKAGE}" ; export SANDBOX    # Root of the sandbox stuff
+STAGEDIR="${SANDBOX}/stages"    ; export INSTDIR    # Used to track what *stage* the build is currently in
 INSTDIR="${SANDBOX}/inst"       ; export INSTDIR    # Location package will be installed into
 WORKDIR="${SANDBOX}/work"       ; export WORKDIR    # Location source will be unpacked into
 BUILDDIR="${SANDBOX}/build"     ; export BUILDDIR   # Location source will be built within.

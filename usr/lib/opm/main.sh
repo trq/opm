@@ -3,6 +3,9 @@ opm.main() {
     shift
     while [ "${1}" != "" ]; do
         case "${1}" in
+            unmerge)
+                opm.unmerge
+                ;;
             sync)
                 opm.sync
                 ;;
@@ -14,45 +17,46 @@ opm.main() {
                 ;;
             fetch)
                 opm.fetch
+                opm.util.complete_stage fetch
                 ;;
             unpack)
+                opm.util.requires_stage fetch
                 opm.unpack
+                opm.util.complete_stage unpack
                 ;;
             prepare)
+                opm.util.requires_stage unpack
                 opm.prepare
+                opm.util.complete_stage prepare
                 ;;
             configure)
+                opm.util.requires_stage prepare
                 opm.configure
+                opm.util.complete_stage configure
                 ;;
             compile)
+                opm.util.requires_stage configure
                 opm.compile
+                opm.util.complete_stage compile
                 ;;
             install)
+                opm.util.requires_stage compile
                 opm.install
+                opm.util.complete_stage 'install'
                 ;;
             package)
+                opm.util.requires_stage 'install'
                 opm.package
+                opm.util.complete_stage package
                 ;;
             merge)
+                opm.util.requires_stage package
                 opm.merge
-                ;;
-            add)
-                opm.virtual
-                opm.clean
-                opm.fetch
-                opm.unpack
-                opm.prepare
-                opm.configure
-                opm.compile
-                opm.install
-                opm.package
-                opm.merge
-                ;;
-            unmerge)
-                opm.unmerge
+                opm.util.complete_stage merge
                 ;;
             *)
-                die "Please specify unpack, configure, compile or all as the second arg"
+                opm.usage
+                exit 1
                 ;;
         esac
         shift

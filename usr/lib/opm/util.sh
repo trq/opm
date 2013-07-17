@@ -44,3 +44,17 @@ opm.util.requires_dir() {
         [ -d "${dir}" ] || install -d "${dir}"
     done
 }
+
+opm.util.complete_stage() {
+    touch "$STAGEDIR/$1"
+}
+
+opm.util.is_stage_complete() {
+    [ -f "$STAGEDIR/$1" ]
+}
+
+opm.util.requires_stage() {
+    if ! opm.util.is_stage_complete $1; then
+        opm ${CATEGORY}/${PACKAGE} ${1}
+    fi
+}
