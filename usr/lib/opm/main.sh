@@ -39,13 +39,23 @@ opm.main() {
                 opm.compile
                 opm.util.complete_stage compile
                 ;;
-            install)
+            preinstall)
                 opm.util.requires_stage compile
+                opm.preinstall
+                opm.util.complete_stage preinstall
+                ;;
+            install)
+                opm.util.requires_stage preinstall
                 opm.install
                 opm.util.complete_stage 'install'
                 ;;
-            package)
+            postinstall)
                 opm.util.requires_stage 'install'
+                opm.preinstall
+                opm.util.complete_stage postinstall
+                ;;
+            package)
+                opm.util.requires_stage postinstall
                 opm.package
                 opm.util.complete_stage package
                 ;;

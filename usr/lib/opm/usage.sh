@@ -13,7 +13,9 @@ opm.usage() {
     echo "  prepare     : prepare source"
     echo "  configure   : configure sources"
     echo "  compile     : compile sources"
+    echo "  preinstall  : pre install utility"
     echo "  install     : install the package to the temporary install directory"
+    echo "  postinstall : post install utility"
     echo "  package     : package the package into a tarball"
     echo "  merge       : merge the packaged tarball into the root filesystem"
     echo

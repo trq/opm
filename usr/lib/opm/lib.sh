@@ -1,7 +1,3 @@
-opm.virtual() {
-    return
-}
-
 opm.sync() {
     cd ${OPMDIR}
     git submodule foreach git pull origin develop
@@ -108,12 +104,20 @@ opm.compile() {
     try make "$MAKEOPTS"
 }
 
+opm.preinstall() {
+    return
+}
+
 opm.install() {
     opm.util.requires_dir ${INSTDIR}
 
     msg "Installing into '$INSTDIR' ..."
     cd "$BUILDDIR";
     try make DESTDIR="$INSTDIR" install
+}
+
+opm.postinstall() {
+    return
 }
 
 opm.package() {
