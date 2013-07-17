@@ -13,6 +13,7 @@ opm.usage() {
     echo "  package     : package the package into a tarball"
     echo "  merge       : merge the packaged tarball into the root filesystem"
     echo "  unmerge     : remove the package from the root filesystem"
-    echo "  clean       : clean up all source and temporary files"
+    echo "  clean       : clean the build directory"
+    echo "  purge       : remove the sandbox"
     echo
 }

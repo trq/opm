@@ -9,6 +9,9 @@ opm.main() {
             clean)
                 opm.clean
                 ;;
+            purge)
+                opm.purge
+                ;;
             fetch)
                 opm.fetch
                 ;;

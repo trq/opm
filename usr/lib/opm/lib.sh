@@ -8,8 +8,15 @@ opm.sync() {
 }
 
 opm.clean() {
+    if [ -d "${BUILDDIR}" ]; then
+        msg "Cleaning build directory ..."
+        rm -rf "${BUILDDIR}"
+    fi
+}
+
+opm.purge() {
     if [ -d "${SANDBOX}" ]; then
-        msg "Cleaning old sources ..."
+        msg "Purging sandbox ..."
         rm -rf "${SANDBOX}"
     fi
 }
@@ -84,7 +91,7 @@ opm.configure() {
     cd "$BUILDDIR";
 
     [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure \
-        --prefix=${CONFIG_PREFIX:-/usr} \
+        --prefix=${CONFIG_PREFIX:=/usr} \
         --mandir=/usr/share/man \
         --infodir=/usr/share/info \
         --datadir=/usr/share \
@@ -121,7 +128,7 @@ opm.merge() {
     opm.util.requires_dir ${METADIR}
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
-        msg "Merging '${PACKAGE}' into / ..."
+        msg "Merging '${PACKAGE}' into ${TARGETFS} ..."
         sudo tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
     fi
 }
