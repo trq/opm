@@ -47,5 +47,6 @@ fi
 # Working area.
 SANDBOX="${WORKDIR}/${PACKAGE}" ; export SANDBOX    # Root of the sandbox stuff
 INSTDIR="${SANDBOX}/inst"       ; export INSTDIR    # Location package will be installed into
-WORKDIR="${SANDBOX}/work"       ; export WORKDIR    # Location source will be unpacked to.
-SOURCEDIR="$WORKDIR/$PACKAGE"   ; export SOURCEDIR  # THe directory the actual source is in
+WORKDIR="${SANDBOX}/work"       ; export WORKDIR    # Location source will be unpacked into
+BUILDDIR="${SANDBOX}/build"     ; export BUILDDIR   # Location source will be built within.
+SOURCEDIR="$WORKDIR/$PACKAGE"   ; export SOURCEDIR  # The directory the actual unpacked source is in

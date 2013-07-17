@@ -6,7 +6,7 @@ opm.usage() {
     echo "  help        : show this help screen"
     echo "  fetch       : download source archive(s) and patches"
     echo "  unpack      : unpack sources"
-    echo "  unpack      : perpare source"
+    echo "  prepare     : prepare source"
     echo "  configure   : configure sources"
     echo "  compile     : compile sources"
     echo "  install     : install the package to the temporary install directory"

@@ -1,3 +1,7 @@
+opm.virtual() {
+    return
+}
+
 opm.sync() {
     cd ${OPMDIR}
     git submodule foreach git pull origin develop
@@ -74,10 +78,12 @@ opm.prepare() {
 }
 
 opm.configure() {
-    msg "Configuring source ..."
-    cd "$SOURCEDIR";
+    opm.util.requires_dir ${BUILDDIR}
 
-    [ -e ./configure ] && try ./configure \
+    msg "Configuring source ..."
+    cd "$BUILDDIR";
+
+    [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure \
         --prefix=${CONFIG_PREFIX:-/usr} \
         --mandir=/usr/share/man \
         --infodir=/usr/share/info \
@@ -91,7 +97,7 @@ opm.configure() {
 opm.compile() {
     msg "Compiling source ..."
     # Shoudn't we drop MAKEOPTS in favor of MAKEFLAGS variable which make use by default?
-    cd "$SOURCEDIR";
+    cd "$BUILDDIR";
     try make "$MAKEOPTS"
 }
 
@@ -99,7 +105,7 @@ opm.install() {
     opm.util.requires_dir ${INSTDIR}
 
     msg "Installing into '$INSTDIR' ..."
-    cd "$SOURCEDIR";
+    cd "$BUILDDIR";
     try make DESTDIR="$INSTDIR" install
 }
 

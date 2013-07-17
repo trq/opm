@@ -34,6 +34,7 @@ opm.main() {
                 opm.merge
                 ;;
             add)
+                opm.virtual
                 opm.clean
                 opm.fetch
                 opm.unpack
