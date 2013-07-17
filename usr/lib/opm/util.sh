@@ -54,7 +54,9 @@ opm.util.is_stage_complete() {
 }
 
 opm.util.requires_stage() {
-    if ! opm.util.is_stage_complete $1; then
-        opm ${CATEGORY}/${PACKAGE} ${1}
+    if [ -z $virtual ] ; then
+        if ! opm.util.is_stage_complete $1; then
+            opm ${CATEGORY}/${PACKAGE} ${1}
+        fi
     fi
 }
