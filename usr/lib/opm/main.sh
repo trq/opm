@@ -51,7 +51,7 @@ opm.main() {
                 ;;
             postinstall)
                 opm.util.requires_stage 'install'
-                opm.preinstall
+                opm.postinstall
                 opm.util.complete_stage postinstall
                 ;;
             package)
