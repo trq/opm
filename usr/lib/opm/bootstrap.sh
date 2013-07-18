@@ -25,14 +25,19 @@ fi
 
 TARGETFS=/ ; export TARGETFS
 
-## Laoad external config file.
-if [ -f ~/.opm.conf ] ; then
-    . ~/.opm.conf
+# Laoad external config files in order of precedence.
+if [ -f $OPMDIR/etc/opm.conf ] ; then
+    . $OPMDIR/etc/opm.conf
 fi
 
 if [ -f /etc/opm.conf ] ; then
     . /etc/opm.conf
 fi
+
+if [ -f ~/.opm.conf ] ; then
+    . ~/.opm.conf
+fi
+
 
 # Working area.
 SANDBOX="${WORKDIR}/${PACKAGE}" ; export SANDBOX    # Root of the sandbox stuff
