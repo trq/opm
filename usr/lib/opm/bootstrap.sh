@@ -12,7 +12,7 @@ WORKDIR="${OPMDIR}/tmp/opm"
 CATEGORY="${1%%/*}" ; export CATEGORY
 PACKAGE_NAME="${1##*/}"
 
-PACKAGE_VERSION="${PACKAGE_NAME#*-}"
+PACKAGE_VERSION="${PACKAGE_NAME##*-}"
 
 if ! [[ "$PACKAGE_VERSION" =~ ^[0-9] ]] ; then
     opm_file=$(ls ${OPMS}/${CATEGORY}/${PACKAGE_NAME}/ | grep ^[0-9].*\.opm$ | tail -n1)
