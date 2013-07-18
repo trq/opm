@@ -30,6 +30,10 @@ opm.util.source_file() {
     done
 }
 
+opm.util.configure() {
+    [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure "$@" 2>&1 | tee ${SANDBOX}/configure.log
+}
+
 opm.util.source_opm() {
     if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/base.opm" ]; then
         opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "base.opm"

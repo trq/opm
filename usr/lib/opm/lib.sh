@@ -1,3 +1,13 @@
+opm.list() {
+    echo
+    echo  Installed Packages:
+    echo
+    for installed in $(ls --color=never ${METADIR}) ; do
+        success ${installed%*.installed} ;
+    done
+    echo
+}
+
 opm.sync() {
     cd ${OPMDIR}
     git submodule foreach git pull origin develop
@@ -86,22 +96,22 @@ opm.configure() {
     msg "Configuring source ..."
     cd "$BUILDDIR";
 
-    [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure \
+    opm.util.configure \
         --prefix=${CONFIG_PREFIX:=/usr} \
         --mandir=/usr/share/man \
         --infodir=/usr/share/info \
         --datadir=/usr/share \
         --sysconfdir=/etc \
         --localstatedir=/var/lib \
-        --disable-dependency-tracking \
-        "$@"
+        --disable-dependency-tracking
 }
 
 opm.compile() {
     msg "Compiling source ..."
     # Shoudn't we drop MAKEOPTS in favor of MAKEFLAGS variable which make use by default?
     cd "$BUILDDIR";
-    try make "$MAKEOPTS"
+    try make "$MAKEOPTS" 2>&1 | tee ${SANDBOX}/compile.log
+    #try make "$MAKEOPTS"
 }
 
 opm.preinstall() {
@@ -140,7 +150,7 @@ opm.merge() {
 opm.unmerge() {
     opm.util.requires_dir ${METADIR}
 
-    cd /
+    cd ${TARGETFS:=/}
 
     if [ -f ${METADIR}/${PACKAGE}.installed ]; then
         for file in $(cat ${METADIR}/${PACKAGE}.installed) ; do

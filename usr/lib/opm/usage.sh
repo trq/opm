@@ -4,8 +4,9 @@ opm.usage() {
     echo
     echo "Available actions:"
     echo "  help        : show this help screen"
+    echo "  list        : list installed builds"
     echo "  unmerge     : remove the package from the root filesystem"
-    echo "  sync        : "
+    echo "  sync        : sync the packages with upstream"
     echo "  clean       : clean the build directory"
     echo "  purge       : remove the sandbox"
     echo "  fetch       : download source archive(s) and patches"
