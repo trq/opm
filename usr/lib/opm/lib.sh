@@ -108,10 +108,8 @@ opm.configure() {
 
 opm.compile() {
     msg "Compiling source ..."
-    # Shoudn't we drop MAKEOPTS in favor of MAKEFLAGS variable which make use by default?
     cd "$BUILDDIR";
-    try make "$MAKEOPTS" 2>&1 | tee ${SANDBOX}/compile.log
-    #try make "$MAKEOPTS"
+    try make 2>&1 | tee ${SANDBOX}/compile.log
 }
 
 opm.preinstall() {

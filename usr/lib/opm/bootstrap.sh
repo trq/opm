@@ -17,12 +17,6 @@ export PACKAGE_VERSION
 
 PACKAGE=$PACKAGE_NAME-$PACKAGE_VERSION ; export PACKAGE
 
-# Dynamically configure some defaults.
-NUMCPU="$(grep -c '^processor' /proc/cpuinfo)" ; export NUMCPU
-if [ -z "${MAKEOPTS}" ]; then
-    export MAKEOPTS="--jobs=$NUMCPU"
-fi
-
 TARGETFS=/ ; export TARGETFS
 
 # Laoad external config files in order of precedence.
