@@ -46,6 +46,7 @@ opm.util.requires_dir() {
 }
 
 opm.util.complete_stage() {
+    opm.util.requires_dir ${STAGEDIR}
     touch "$STAGEDIR/$1"
 }
 
