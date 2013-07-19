@@ -162,7 +162,7 @@ opm.merge() {
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
         msg "Merging '${PACKAGE}' into ${TARGETFS} ..."
-        sudo tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
+        tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
     fi
 
     opm.util.complete_stage "merge"
