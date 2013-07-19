@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# LFS stuff.
-exec env -i HOME=$HOME TERM=$TERM /bin/bash
-
 OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
