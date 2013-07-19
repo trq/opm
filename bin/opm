@@ -30,7 +30,5 @@ else
     # Bootstrap and execute the main application.
     . ${OPMDIR}/usr/lib/opm/bootstrap.sh
 
-    # LFS clean environment.
-    env -i HOME=$HOME TERM=$TERM PATH=${CONFIG_PREFIX}/bin:/bin:/usr/bin /bin/bash
     opm.main $@
 fi

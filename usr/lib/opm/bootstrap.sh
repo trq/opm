@@ -15,14 +15,20 @@ fi
 PACKAGE_REVISION="${PACKAGE_VERSION#*_}"
 PACKAGE_VERSION=${PACKAGE_VERSION%_*}
 
-if [[ "$OPM_REVISION" = "$PACKAGE_VERSION" ]] ;then
-    OPM_REVISION=
+if [[ "$PACKAGE_REVISION" = "$PACKAGE_VERSION" ]] ;then
+    PACKAGE_REVISION=
 fi
 
 export PACKAGE_NAME
 export PACKAGE_VERSION
 
-PACKAGE=$PACKAGE_NAME-$PACKAGE_VERSION ; export PACKAGE
+if ! [ -z $PACKAGE_REVISION ] ; then
+    PACKAGE=$PACKAGE_NAME-${PACKAGE_VERSION}_${PACKAGE_REVISION} ; export PACKAGE
+    pkg=$PACKAGE_NAME-${PACKAGE_VERSION} ;
+else
+    PACKAGE=$PACKAGE_NAME-${PACKAGE_VERSION} ; export PACKAGE
+    pkg=$PACKAGE_NAME-${PACKAGE_VERSION} ;
+fi
 
 TARGETFS=/ ; export TARGETFS
 
@@ -46,4 +52,4 @@ STAGEDIR="${SANDBOX}/stages"    ; export INSTDIR    # Used to track what *stage*
 INSTDIR="${SANDBOX}/inst"       ; export INSTDIR    # Location package will be installed into
 WORKDIR="${SANDBOX}/work"       ; export WORKDIR    # Location source will be unpacked into
 BUILDDIR="${SANDBOX}/build"     ; export BUILDDIR   # Location source will be built within.
-SOURCEDIR="$WORKDIR/$PACKAGE"   ; export SOURCEDIR  # The directory the actual unpacked source is in
+SOURCEDIR="$WORKDIR/$pkg"       ; export SOURCEDIR  # The directory the actual unpacked source is in
