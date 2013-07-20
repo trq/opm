@@ -151,7 +151,7 @@ opm.package() {
 
     cd ${INSTDIR}
     msg "Packaging '$INSTDIR' ..."
-    tar cvzf ${PKGDIR}/${PACKAGE}.tar.gz .
+    tar cpvzfh ${PKGDIR}/${PACKAGE}.tar.gz .
 
     opm.util.complete_stage "package"
 }
@@ -162,7 +162,7 @@ opm.merge() {
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
         msg "Merging '${PACKAGE}' into ${TARGETFS} ..."
-        tar xvf ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
+        tar xpvfh ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
     fi
 
     opm.util.complete_stage "merge"
