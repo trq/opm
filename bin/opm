@@ -13,8 +13,11 @@ PKGDIR="${OPMDIR}/var/opm/packages"
 METADIR="${OPMDIR}/var/opm/meta"
 WORKDIR="${OPMDIR}/tmp/opm"
 
+export STAGE=
+
 # Source the libs
 . ${OPMDIR}/usr/lib/opm/util.sh
+. ${OPMDIR}/usr/lib/opm/stage.sh
 . ${OPMDIR}/usr/lib/opm/usage.sh
 . ${OPMDIR}/usr/lib/opm/main.sh
 . ${OPMDIR}/usr/lib/opm/lib.sh

@@ -70,22 +70,3 @@ opm.util.requires_dir() {
 opm.util.func_exists() {
     type "$1" | grep -q "function"
 }
-
-opm.util.complete_stage() {
-    opm.util.requires_dir ${STAGEDIR}
-    touch "$STAGEDIR/$1"
-}
-
-opm.util.is_stage_complete() {
-    [ -f "$STAGEDIR/$1" ]
-}
-
-opm.util.requires_stage() {
-    if [ -z $virtual ] ; then
-        if ! opm.util.is_stage_complete $1; then
-            if opm.util.func_exists "opm.$1"; then
-                opm.${1}
-            fi
-        fi
-    fi
-}

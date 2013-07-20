@@ -1,3 +1,5 @@
+# Auxiliary actions.
+
 opm.list() {
     echo
     echo  Installed Packages:
@@ -27,7 +29,23 @@ opm.purge() {
     fi
 }
 
+opm.unmerge() {
+    opm.util.requires_dir ${METADIR}
+
+    cd ${TARGETFS:=/}
+
+    if [ -f ${METADIR}/${PACKAGE}.installed ]; then
+        for file in $(cat ${METADIR}/${PACKAGE}.installed) ; do
+            msg "Removing '${file}' ..."
+            rm ${file}
+        done
+    fi
+}
+
+# Stages
+
 opm.fetch() {
+    opm.stage.start "fetch"
     opm.util.requires_dir ${DISTDIR}
 
     for source in "${sources[@]}"; do
@@ -59,11 +77,12 @@ opm.fetch() {
     done;
     unset source
 
-    opm.util.complete_stage "fetch"
+    opm.stage.complete "fetch"
 }
 
 opm.unpack() {
-    opm.util.requires_stage "fetch"
+    opm.stage.start "unpack"
+    opm.stage.requires "fetch"
     opm.util.requires_dir ${DISTDIR} ${WORKDIR}
 
     for source in "${sources[@]}"; do
@@ -87,16 +106,18 @@ opm.unpack() {
     [ ! -d "$SOURCEDIR" ] && die "Source directory $SOURCEDIR specified in \$SOURCEDIR does not exist. Exiting."
 
     cd "$SOURCEDIR"
-    opm.util.complete_stage "unpack"
+    opm.stage.complete "unpack"
 }
 
 opm.prepare() {
-    opm.util.requires_stage "unpack"
-    opm.util.complete_stage "prepare"
+    opm.stage.start "prepare"
+    opm.stage.requires "unpack"
+    opm.stage.complete "prepare"
 }
 
 opm.configure() {
-    opm.util.requires_stage "prepare"
+    opm.stage.start "configure"
+    opm.stage.requires "prepare"
     opm.util.requires_dir ${BUILDDIR}
 
     msg "Configuring source ..."
@@ -111,53 +132,59 @@ opm.configure() {
         --localstatedir=/var/lib \
         --disable-dependency-tracking
 
-    opm.util.complete_stage "configure"
+    opm.stage.complete "configure"
 }
 
 opm.compile() {
-    opm.util.requires_stage "configure"
+    opm.stage.start "compile"
+    opm.stage.requires "configure"
 
     msg "Compiling source ..."
     cd "$BUILDDIR";
     try make 2>&1 | tee ${SANDBOX}/compile.log
 
-    opm.util.complete_stage "configure"
+    opm.stage.complete "configure"
 }
 
 opm.preinstall() {
-    opm.util.requires_stage "compile"
-    opm.util.complete_stage "preinstall"
+    opm.stage.start "preinstall"
+    opm.stage.requires "compile"
+    opm.stage.complete "preinstall"
 }
 
 opm.install() {
-    opm.util.requires_stage "preinstall"
+    opm.stage.start "install"
+    opm.stage.requires "preinstall"
     opm.util.requires_dir ${INSTDIR}
 
     msg "Installing into '$INSTDIR' ..."
     cd "$BUILDDIR";
     try make DESTDIR="$INSTDIR" install
 
-    opm.util.complete_stage "install"
+    opm.stage.complete "install"
 }
 
 opm.postinstall() {
-    opm.util.requires_stage "install"
-    opm.util.complete_stage "postinstall"
+    opm.stage.start "postinstall"
+    opm.stage.requires "install"
+    opm.stage.complete "postinstall"
 }
 
 opm.package() {
-    opm.util.requires_stage "postinstall"
+    opm.stage.start "package"
+    opm.stage.requires "postinstall"
     opm.util.requires_dir ${INSTDIR} ${PKGDIR}
 
     cd ${INSTDIR}
     msg "Packaging '$INSTDIR' ..."
     tar cpvzfh ${PKGDIR}/${PACKAGE}.tar.gz .
 
-    opm.util.complete_stage "package"
+    opm.stage.complete "package"
 }
 
 opm.merge() {
-    opm.util.requires_stage "package"
+    opm.stage.start "merge"
+    opm.stage.requires "package"
     opm.util.requires_dir ${METADIR}
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
@@ -165,18 +192,5 @@ opm.merge() {
         tar xpvfh ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
     fi
 
-    opm.util.complete_stage "merge"
-}
-
-opm.unmerge() {
-    opm.util.requires_dir ${METADIR}
-
-    cd ${TARGETFS:=/}
-
-    if [ -f ${METADIR}/${PACKAGE}.installed ]; then
-        for file in $(cat ${METADIR}/${PACKAGE}.installed) ; do
-            msg "Removing '${file}' ..."
-            rm ${file}
-        done
-    fi
+    opm.stage.complete "merge"
 }
