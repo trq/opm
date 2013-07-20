@@ -143,7 +143,7 @@ opm.compile() {
     cd "$BUILDDIR";
     try make 2>&1 | tee ${SANDBOX}/compile.log
 
-    opm.stage.complete "configure"
+    opm.stage.complete "compile"
 }
 
 opm.preinstall() {
@@ -159,7 +159,7 @@ opm.install() {
 
     msg "Installing into '$INSTDIR' ..."
     cd "$BUILDDIR";
-    try make DESTDIR="$INSTDIR" install
+    try make DESTDIR="$INSTDIR" install 2>&1 | tee ${SANDBOX}/install.log
 
     opm.stage.complete "install"
 }
@@ -176,8 +176,14 @@ opm.package() {
     opm.util.requires_dir ${INSTDIR} ${PKGDIR}
 
     cd ${INSTDIR}
-    msg "Packaging '$INSTDIR' ..."
-    tar cpvzfh ${PKGDIR}/${PACKAGE}.tar.gz .
+
+    if [ "$(ls -A $INSTDIR)" ] ; then
+        msg "Packaging '$INSTDIR' ..."
+        tar cpvzfh ${PKGDIR}/${PACKAGE}.tar.gz .
+    else
+        error "'$INSTDIR' is empty"
+        opm.stage.fail "package"
+    fi
 
     opm.stage.complete "package"
 }
@@ -193,4 +199,8 @@ opm.merge() {
     fi
 
     opm.stage.complete "merge"
+
+    if opm.util.func_exists 'opm.postmerge'; then
+        opm.postmerge
+    fi
 }

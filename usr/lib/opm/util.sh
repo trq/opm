@@ -22,10 +22,12 @@ echolog() {
             ;;
     esac
     shift
-    echo -e "${color}$@\033[0m"
+    stage=${STAGE[${#STAGE[@]}-1]}
+
+    echo -e "$stage: ${color}$@\033[0m"
 
     s=$(date "+%Y%m%d %T");
-    echo "${s}: $kind: $CATEGORY/$PACKAGE: $STAGE: $@" >> $OPMLOG
+    echo "${s}: $kind: $CATEGORY/$PACKAGE: $stage: $@" >> $OPMLOG
 }
 
 msg() { echolog msg "${@}"; }
@@ -68,5 +70,5 @@ opm.util.requires_dir() {
 }
 
 opm.util.func_exists() {
-    type "$1" | grep -q "function"
+    type -t "$1" | grep -q "function"
 }

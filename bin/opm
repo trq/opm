@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
