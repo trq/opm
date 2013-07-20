@@ -3,17 +3,35 @@
 umask 022
 unalias -a
 
-RESTORE='\033[0m'
-RED='\033[00;31m'
-GREEN='\033[00;32m'
-YELLOW='\033[00;33m'
-CYAN='\033[00;36m'
+#global utils
 
-#global util
-msg() { echo -e "${CYAN}${@}${RESTORE}"; }
-success() { echo -e "${GREEN}${@}${RESTORE}"; }
-warn() { echo -e "${YELLOW}${@}${RESTORE}"; }
-error() { echo -e "${RED}${@}${RESTORE}" >&2; }
+echolog() {
+    kind=$1
+    case $1 in
+        msg)
+            color='\033[00;36m'
+            ;;
+        sucess)
+            color='\033[00;32m'
+            ;;
+        warn)
+            color='\033[00;33m'
+            ;;
+        error)
+            color='\033[00;31m'
+            ;;
+    esac
+    shift
+    echo -e "${color}$@\033[0m"
+
+    s=$(date "+%Y%m%d %T");
+    echo "${s}: $kind: $CATEGORY/$PACKAGE: $STAGE: $@" >> $OPMLOG
+}
+
+msg() { echolog msg "${@}"; }
+success() { echolog success "${@}"; }
+warn() { echolog warn "${@}"; }
+error() { echolog error "${@}" >&2; }
 die() { error "$@"; exit 1; }
 try() { "$@" || die "Error running command: $@"; }
 
