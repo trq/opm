@@ -12,6 +12,9 @@ opm.main() {
             clean)
                 opm.clean
                 ;;
+            info)
+                opm.info
+                ;;
             purge)
                 opm.purge
                 ;;

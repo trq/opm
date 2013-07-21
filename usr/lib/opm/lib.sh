@@ -11,14 +11,14 @@ opm.list() {
 }
 
 opm.info() {
-    if [ -f $METADIR/$1.installed ] ; then
+    if [ -f ${METADIR}/${CATEGORY}/${PACKAGE}.installed ] ; then
         echo "Package: $1"
-        echo "Install Date: $(date -r ${METADIR}/$1.installed)"
+        echo "Install Date: $(date -r ${METADIR}/${CATEGORY}/${PACKAGE}.installed)"
         echo "Merged Files:"
         echo
-        cat $METADIR/$1.installed
+        cat $METADIR/$CATEGORY/$PACKAGE.installed
     else
-        echo "$1 is not currently installed"
+        echo "$CATEGORY/$PACKAGE is not currently installed"
     fi
 }
 

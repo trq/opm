@@ -29,8 +29,6 @@ if [ "$1" = "sync" ] ; then
     opm.sync
 elif [ "$1" = "list" ] ; then
     opm.list
-elif [[ "$1" = "info" && -n "$2" ]] ; then
-    opm.info "$2"
 elif [ -z "$2" ]; then
     opm.usage
 else

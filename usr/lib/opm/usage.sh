@@ -3,9 +3,6 @@ opm.usage() {
     echo "  ${0} list"
     echo "      list installed builds"
     echo
-    echo "  ${0} info <category>/<package>"
-    echo "      list information about an installed package"
-    echo
     echo "  ${0} sync"
     echo "      sync the package repository with upstream"
     echo
@@ -20,6 +17,7 @@ opm.usage() {
     echo "          unmerge     : remove the package from the root filesystem"
     echo "          clean       : clean the build directory"
     echo "          purge       : remove the sandbox"
+    echo "          info        : display information about an installed package"
     echo
     echo "      Stages:"
     echo "          fetch       : download source archive(s) and patches"
