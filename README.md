@@ -29,6 +29,8 @@ This is it. Live with it.
 
 ### Usage
 
+What can this thing do?
+
 ```
 opm list
   list installed builds
