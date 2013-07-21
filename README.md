@@ -106,7 +106,7 @@ opm.postinstall() {
 }
 ```
 
-With this basic skeleton in place, calling "postinstall" without firstly calling "install" will automatically have "install" called. This design has a chain effect. Given the "merge" action, the process works like this:
+With this basic skeleton in place, calling _postinstall_ without firstly calling _install_ will automatically have _install_ called. This design has a chain effect. Given the _merge_ action, the process works like this:
 
 1. The _merge_ stage starts.
 2. Merge's dependency _package_ is checked to see if it has started, it starts
