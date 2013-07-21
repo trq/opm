@@ -5,7 +5,7 @@ opm.list() {
     echo  Installed Packages:
     echo
     for installed in $(ls --color=never ${METADIR}) ; do
-        success ${installed%*.installed} ;
+        echo ${installed%*.installed} ;
     done
     echo
 }
