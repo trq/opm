@@ -12,7 +12,7 @@ opm.list() {
 
 opm.info() {
     if [ -f ${METADIR}/${CATEGORY}/${PACKAGE}.installed ] ; then
-        echo "Package: $1"
+        echo "Package: $CATEGORY/$PACKAGE"
         echo "Install Date: $(date -r ${METADIR}/${CATEGORY}/${PACKAGE}.installed)"
         echo "Merged Files:"
         echo

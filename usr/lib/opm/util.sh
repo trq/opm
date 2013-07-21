@@ -8,6 +8,9 @@ unalias -a
 echolog() {
     kind=$1
     case $1 in
+        log)
+            color='none'
+            ;;
         msg)
             color='\033[00;36m'
             ;;
@@ -24,12 +27,15 @@ echolog() {
     shift
     stage=${STAGE[${#STAGE[@]}-1]}
 
-    echo -e "$stage: ${color}$@\033[0m"
+    if [ "$color" != "none" ] ; then
+        echo -e "$stage: ${color}$@\033[0m"
+    fi
 
     s=$(date "+%Y%m%d %T");
     echo "${s}: $kind: $CATEGORY/$PACKAGE: $stage: $@" >> $OPMLOG
 }
 
+log() { echolog log "${@}"; }
 msg() { echolog msg "${@}"; }
 success() { echolog success "${@}"; }
 warn() { echolog warn "${@}"; }
@@ -45,7 +51,7 @@ opm.util.source_file() {
     do
         fn="$prefix/$fn"
         [ ! -r "${fn}" ] && die "File $fn not found. Exiting."
-        msg "Sourcing ${fn} ..."
+        log "Sourcing ${fn} ..."
         . "${fn}"
     done
 }
