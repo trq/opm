@@ -4,7 +4,7 @@
 
 OPM is intended to be a light weight package manager for Linux. Designed to be a simple framework wrapping around downloading, unpacking, configuring, compiling and installing packages built from source code.
 
-It is not my intention for this to be some attempt at a "be all and end all" of package management. This is a personal project, something I have wanted to dabble with for a long time. Nothing more than a learning exercise that I myself may find useful.
+It is not my intention for this to be some attempt at a _be all and end all_ of package management. This is a personal project, something I have wanted to dabble with for a long time. Nothing more than a learning exercise that I myself may find useful.
 
 If you find it interesting and or useful, awesome. But I wouldn't go looking for too much support.
 
