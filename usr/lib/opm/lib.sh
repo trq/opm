@@ -10,6 +10,18 @@ opm.list() {
     echo
 }
 
+opm.info() {
+    if [ -f $METADIR/$1.installed ] ; then
+        echo "Package: $1"
+        echo "Install Date: $(date -r ${METADIR}/$1.installed)"
+        echo "Merged Files:"
+        echo
+        cat $METADIR/$1.installed
+    else
+        echo "$1 is not currently installed"
+    fi
+}
+
 opm.sync() {
     cd ${OPMDIR}
     git submodule foreach git pull origin develop
@@ -191,11 +203,11 @@ opm.package() {
 opm.merge() {
     opm.stage.start "merge"
     opm.stage.requires "package"
-    opm.util.requires_dir ${METADIR}
+    opm.util.requires_dir ${METADIR}/${CATEGORY}
 
     if [ -f ${PKGDIR}/${PACKAGE}.tar.gz ]; then
         msg "Merging '${PACKAGE}' into ${TARGETFS} ..."
-        tar xpvfh ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${PACKAGE}.installed
+        tar xpvfh ${PKGDIR}/${PACKAGE}.tar.gz -C ${TARGETFS} > ${METADIR}/${CATEGORY}/${PACKAGE}.installed
     fi
 
     opm.stage.complete "merge"
