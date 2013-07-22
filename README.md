@@ -328,12 +328,12 @@ The version of the current package
 PACKAGE_VERSION
 ```
 
-The revision of the current package (if any)
+The revision of the current package's build script (if any).
 ```
 PACKAGE_REVISION
 ```
 
-The \<name\>-\<version\>_\<revision\> of the current package
+The name-version_revision of the current package
 ```
 PACKAGE
 ```
