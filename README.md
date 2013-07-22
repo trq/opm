@@ -139,7 +139,7 @@ As OPM is bootstrapped, various functions are made available within the current 
 
 For example, the default configure stage looks like this. This provides a sane default that will work for a lot of packages.
 
-```
+```bash
 opm.configure() {
     opm.stage.start "configure"
     opm.stage.requires "prepare"
@@ -163,7 +163,7 @@ opm.configure() {
 
 However, at times we will need to customise the way packages are configured. We can do this by simply overwriting the opm.configure function within our build script.
 
-```
+```bash
 opm.configure() {
     opm.stage.start "configure"
     opm.stage.requires "prepare"
@@ -218,7 +218,7 @@ opm sys-apps/sed-3.0 prepare
 
 Each stage is responsible for registering itself with the stage manager, letting the stage manager know what stage the current stage depends on, doing its work and then finally letting the stage manager know that it has completed.
 
-```
+```bash
 opm.postinstall() {
     opm.stage.start "postinstall"
     opm.stage.requires "install"
@@ -245,7 +245,7 @@ This process goes all the way back up the chain until finally _merge_ (the stage
 
 If, while a stage is doing its work an error occures, you can (and likely should) register the stage as failed.
 
-```
+```bash
 opm.stage.fail
 ```
 
