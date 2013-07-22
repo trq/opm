@@ -150,7 +150,10 @@ _Stage_ actions execute the functions that perform the bulk of the work needed t
 To install sed into your system for instance, you would execute all the stages, one after the other.
 
 ```
-opm sys-apps/sed-3.0 fetch unpack prepare configure compile preinstall install postinstall package merge
+opm sys-apps/sed-3.0 \
+    fetch unpack prepare configure \
+    compile preinstall install postinstall \
+    package merge
 ```
 
 Having to type all of that each time you want to install a package would however quickly become a PITA. Instead, if you know the outcome you want to achieve is to do a merge, just tell OPM to do that:
