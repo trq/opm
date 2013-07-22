@@ -12,6 +12,15 @@ If you find it interesting and or useful, awesome. But I wouldn't go looking for
 
 OPM is currently being developed alongside the building of an [LFS](http://linuxfromscratch.org) system. The intention is to have a set of build scripts for at least chapters 5 & 6. Within these build scripts will be a build script for OPM to install OPM.
 
+For the moment, clone the repo, create the required directories then clone the omps.
+
+```
+git clone https://github.com/trq/opm.git
+cd opm
+mkdir -p var/opm tmp/opm
+git clone https://github.com/trq/opms.git var/opm/opms
+```
+
 If you intend on using OPM to build and or maintain your LFS system, it would be awesome if you got in touch.
 
 ## DOCUMENTATION
