@@ -6,18 +6,9 @@ OPM is intended to be a light weight package manager for Linux. Designed to be a
 
 It is not my intention for this to be some attempt at a _be all and end all_ of package management. This is a personal project, something I have wanted to dabble with for a long time. Nothing more than a learning exercise that I myself may find useful.
 
-If you find it interesting and or useful, awesome. But I wouldn't go looking for too much support.
+If you find it interesting and or useful, awesome. But I wouldn't go looking for to much support.
 
 ## INSTALLATION
-
-```
-git clone git@github.com:trq/opm.git
-./install.sh
-cd var
-git clone git@github.com:trq/opms.git
-```
-
-Put opm/bin on your PATH.
 
 OPM is currently being developed alongside the building of an [LFS](http://linuxfromscratch.org) system. The intention is to have a set of build scripts for at least chapters 5 & 6. Within these build scripts will be a build script for OPM to install OPM.
 
