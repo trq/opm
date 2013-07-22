@@ -87,10 +87,53 @@ opm sys-apps/sed-3.0 merge
 ```
 
 Firstly, within bin/opm a number of globally available variables are set, the OPM libraries are sourced and control is then handed over (for the moment) to the _bootstrap_ script.
-Bootstrap is responsible for setting up package specific variables, by inspecting the requested packages category, name and version.
-Once bootstrap is complete, execution is handed back over to bin/opm where the opm.main function is called. This function is responsible for sourcing the build script and then executing the requested stages.
+Bootstrap is responsible for setting up package specific variables (by inspecting the requested packages category, name and version), sourcing all configuration files, and setting up environment variables required by the sandbox.
+Once bootstrap is complete, execution is handed back over to bin/opm where the opm.main function is called. This function is responsible for sourcing the base build script, the specific package/version build script and then executing the requested stages.
 
 ### Build Scripts
+
+Build scripts are where we can customise the build process for a particular package. Within them you can set variables specific to your package, as well as overwrite the built in _stage_ functions.
+
+Build scripts are located in the opms repository within a there respective categories directory. Each package can define a base.opm (which is used to store common functionality / variables between versions) and then any number of version specific build scripts.
+
+```
+.
+├── lfs-base
+│   ├── gcc
+        ├── base.opm
+        ├── 4.7.2.opm
+```
+
+Within a build script, there are a few important variables that need to be set. An example here shows the base.opm for the lfs/gcc package:
+
+```
+sources=( "http://ftp.gnu.org/gnu/${PACKAGE_NAME}/${PACKAGE_NAME}-${PACKAGE_VERSION}/${PACKAGE_NAME}-${PACKAGE_VERSION}.tar.bz2" )
+description="The GCC package contains the GNU compiler collection, which includes the C and C++ compilers."
+```
+
+Don't worry about the upper cased variables for the moment, these will be explained later, for now, just take note of the variables that are being declared here. Because these variables wont change between versions, these can be abstracted away into a <category>/<package>/base.opm build script. The base.opm files are sourced prior to any more specific <category>/<package>/<version>.opm files.
+
+Currently, the variables that can be set within a built script are:
+
+An array of urls where the source code for this package can be downloaded
+```
+sources
+```
+
+The description of the package
+```
+description
+```
+
+The md5 checksum of the package. If set, this will be checked during the _unpack_ stage.
+```
+checksum
+```
+
+Renames the downloaded archive to whatever is defined within
+```
+archive
+```
 
 As OPM is bootstrapped, various functions are made available within the current environment by sourcing the libraries they are defined in. The _stage_ functions in particular are brought into being through this process. These are the functions that abstract away most of the common functionality required to build a package. It is these _stage_ functions that our build scripts can override to provide more specific functionality to the OPM build process.
 
@@ -141,16 +184,14 @@ opm.configure() {
 }
 ```
 
-There is a bit of boiler plate here, but for now, we are just looking at the opm.util.configure part.
-
 ### Stage Dependencies Explained.
 
 _Stage_ actions execute the functions that perform the bulk of the work needed to be carried out to install a package. It is imperative that these stages be executed in a specific order.
 
-To install sed into your system for instance, you would execute all the stages, one after the other.
+To install gcc into your system for instance, you would execute all the stages, one after the other.
 
 ```
-opm sys-apps/sed-3.0 \
+opm lfs-base/gcc-4.7.2 \
     fetch unpack prepare configure \
     compile preinstall install postinstall \
     package merge
@@ -211,6 +252,121 @@ opm.stage.fail
 This will prevent any dependent stages from executing which would potentially cause more issues.
 
 The only caveat to this entire mechanism is the fact that there is an amount of boiler plate required to override a stage with your own custom implementation. If you don't however supply this boiler plate, your will inevatably break the dependency chain, and your users ability to install packages cleanly and easily.
+
+### The sandbox
+
+As a package is being built, we need an area to work in. This is what the sandbox is.
+
+```
+.
+└── gcc-4.7.2
+    ├── build
+    ├── inst
+    ├── stage
+    └── work
+        └── gcc-4.7.2
+```
+
+This example shows the higher levels of the sandbox created to build gcc-4.7.2.
+
+* The build directory is where packages are built
+* The inst directory is where they will be installed into
+* The stage directory is where the stage manager stores its meta data
+* The work directory is where the archive is unpacked. This typically creates another directory named after the package. It is this directory that the `$SOURCEDIR` variable refers to (see below).
+
+### Globally available variables
+
+Within the build script environment there are a few variables available to you to make locating things easier. They are:
+
+The path to the opm script
+```
+OPM
+```
+
+The path to the root of opm
+```
+OPMDIR
+```
+
+The location of the build scripts repository
+```
+OPMS
+```
+
+The target file system
+```
+TARGETFS
+```
+
+The location downloaded archives are stored in
+```
+DISTDIR
+```
+
+The location compiled packages are stored in
+```
+PKGDIR
+```
+
+The location of all package meta data
+```
+METADIR
+```
+
+The category of the current package
+```
+CATEGORY
+```
+
+The name of the current package
+```
+PACKAGE_NAME
+```
+
+The version of the current package
+```
+PACKAGE_VERSION
+```
+
+The revision of the current package (if any)
+```
+PACKAGE_REVISION
+```
+
+The <name>-<version>_<revision> of the current package
+```
+PACKAGE
+```
+
+The location of the sandbox for the current package
+```
+SANDBOX
+```
+
+The location of the stage directory. This directory is used to store meta data required by the stage manager to track stage status.
+```
+STAGEDIR
+```
+
+The location the package will be installed into. This is only the temporary install location.
+```
+INSTDIR
+```
+
+The location the archive will be unpacked into
+```
+WORKDIR
+```
+
+The location the package will be built in
+```
+BUILDDIR
+```
+
+The location of the package source
+```
+SOURCEDIR
+```
 
 ## CONTRIBUTING
 
