@@ -122,6 +122,12 @@ This process continues all the way down to the _fetch_ stage which no dependenci
 
 This process goes all the way back up the chain until finally _merge_ (the stage we requested) does its work, and registers itself as complete.
 
+If, while a stage is doing its work an error occures, you can (and likely should) register the stage as failed. This will prevent any further stages from executing.
+
+```
+opm.stage.fail
+```
+
 ## CONTRIBUTING
 
 1. Fork it
