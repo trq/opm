@@ -333,7 +333,7 @@ The revision of the current package (if any)
 PACKAGE_REVISION
 ```
 
-The <name>-<version>_<revision> of the current package
+The \<name\>-\<version\>_\<revision\> of the current package
 ```
 PACKAGE
 ```
