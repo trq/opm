@@ -59,12 +59,19 @@ opm.unmerge() {
 
     cd ${TARGETFS:=/}
 
-    if [ -f ${METADIR}/${PACKAGE}.installed ]; then
-        for file in $(cat ${METADIR}/${PACKAGE}.installed) ; do
+    set +e
+
+    if [ -f ${METADIR}/${CATEGORY}/${PACKAGE}.installed ]; then
+        for file in $(cat ${METADIR}/${CATEGORY}/${PACKAGE}.installed) ; do
             msg "Removing '${file}' ..."
-            rm ${file}
+            if [ "$file" != './' ] ; then
+                rm -f ${file}
+            fi
         done
+        rm ${METADIR}/${CATEGORY}/${PACKAGE}.installed
     fi
+
+    set -e
 }
 
 # Stages
