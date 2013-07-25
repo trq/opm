@@ -211,7 +211,7 @@ opm.package() {
 
     if [ "$(ls -A $INSTDIR)" ] ; then
         msg "Packaging '$INSTDIR' ..."
-        tar cpvzfh ${PKGDIR}/${PACKAGE}.tar.gz .
+        tar cpvzf ${PKGDIR}/${PACKAGE}.tar.gz .
     else
         error "'$INSTDIR' is empty"
         opm.stage.fail "package"
