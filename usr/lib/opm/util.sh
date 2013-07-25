@@ -61,11 +61,14 @@ opm.util.configure() {
 }
 
 opm.util.source_opm() {
+    if ! [ -z ${PACKAGE_REVISION} ] ; then
+        revision="_${PACKAGE_REVISION}"
+    fi
     if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/base.opm" ]; then
         opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "base.opm"
     fi
 
-    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION.opm"
+    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "${PACKAGE_VERSION}${revision}.opm"
 }
 
 opm.util.requires_dir() {
