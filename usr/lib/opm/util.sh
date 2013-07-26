@@ -65,7 +65,9 @@ opm.util.source_opm() {
         opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "base.opm"
     fi
 
-    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION.opm"
+    if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/$PACKAGE_VERSION.opm" ]; then
+        opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "$PACKAGE_VERSION.opm"
+    fi
 }
 
 opm.util.requires_dir() {

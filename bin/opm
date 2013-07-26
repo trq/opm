@@ -4,9 +4,8 @@ set -e
 
 OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
-
-# Store the current location
-ORIGDIR="$(pwd)"
+OPMLIBDIR=$OPMDIR/usr/lib/opm
+OPMCMDDIR=$OPMLIBDIR/cmds
 
 # Create directory locations
 OPMS="${OPMDIR}/var/opm/opms"
@@ -20,20 +19,6 @@ export STAGE=
 # Source the libs
 . ${OPMDIR}/usr/lib/opm/util.sh
 . ${OPMDIR}/usr/lib/opm/stage.sh
-. ${OPMDIR}/usr/lib/opm/usage.sh
-. ${OPMDIR}/usr/lib/opm/main.sh
-. ${OPMDIR}/usr/lib/opm/lib.sh
+. ${OPMDIR}/usr/lib/opm/bootstrap.sh
 
-# Execute special cases.
-if [ "$1" = "sync" ] ; then
-    opm.sync
-elif [ "$1" = "list" ] ; then
-    opm.list
-elif [ -z "$2" ]; then
-    opm.usage
-else
-    # Bootstrap and execute the main application.
-    . ${OPMDIR}/usr/lib/opm/bootstrap.sh
-
-    opm.main $@
-fi
+opm.dispatch "$@"

@@ -1,25 +1,38 @@
-opm.usage() {
+help="
+    ${0} help
+        Show this help screen
+"
+
+opm.help() {
     echo "Usage:"
-    echo "  ${0} list"
-    echo "      list installed builds"
+    for cmd in $OPMCMDDIR/*.sh ; do
+        source $cmd
+        if ! [ -z "$help" ] ; then
+            echo -e "   $help"
+            help=
+        fi
+    done
+    echo "    ${0} category/package-version <action>"
     echo
-    echo "  ${0} sync"
-    echo "      sync the package repository with upstream"
-    echo
-    echo "  ${0} help"
-    echo "      show this help screen"
-    echo
-    echo "  ${0} category/package-version <action>"
-    echo
-    echo "  Available actions:"
+    echo "    Available actions:"
     echo
     echo "      Utils:"
-    echo "          unmerge     : remove the package from the root filesystem"
-    echo "          clean       : clean the build directory"
-    echo "          purge       : remove the sandbox"
-    echo "          info        : display information about an installed package"
+    for cmd in $OPMCMDDIR/actions/*.sh ; do
+        source $cmd
+        if ! [ -z "$help" ] ; then
+            echo -e "           $help"
+            help=
+        fi
+    done
     echo
     echo "      Stages:"
+    for cmd in $OPMCMDDIR/actions/stages/*.sh ; do
+        source $cmd
+        if ! [ -z "$help" ] ; then
+            echo -e "           $help"
+            help=
+        fi
+    done
     echo "          fetch       : download source archive(s) and patches"
     echo "          unpack      : unpack sources"
     echo "          prepare     : prepare source"
