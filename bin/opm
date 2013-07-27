@@ -37,5 +37,7 @@ init() {
     fi
 }
 
-export -f init
-su opm -c "init $*"
+#export -f init
+#su opm -c "init $*"
+
+init
