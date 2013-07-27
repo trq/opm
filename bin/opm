@@ -6,7 +6,6 @@ OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
 init() {
-    echo $@
     # Create directory locations
     OPMS="${OPMDIR}/var/opm/opms"
     DISTDIR="${OPMDIR}/var/opm/distfiles"
