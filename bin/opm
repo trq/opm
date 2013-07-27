@@ -5,35 +5,37 @@ set -e
 OPM="`readlink -e ${0}`" ; export OPM
 OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
-# Store the current location
-ORIGDIR="$(pwd)"
+init() {
+    # Create directory locations
+    OPMS="${OPMDIR}/var/opm/opms"
+    DISTDIR="${OPMDIR}/var/opm/distfiles"
+    PKGDIR="${OPMDIR}/var/opm/packages"
+    METADIR="${OPMDIR}/var/opm/meta"
+    WORKDIR="${OPMDIR}/tmp/opm"
 
-# Create directory locations
-OPMS="${OPMDIR}/var/opm/opms"
-DISTDIR="${OPMDIR}/var/opm/distfiles"
-PKGDIR="${OPMDIR}/var/opm/packages"
-METADIR="${OPMDIR}/var/opm/meta"
-WORKDIR="${OPMDIR}/tmp/opm"
+    export STAGE=
 
-export STAGE=
+    # Source the libs
+    . ${OPMDIR}/usr/lib/opm/util.sh
+    . ${OPMDIR}/usr/lib/opm/stage.sh
+    . ${OPMDIR}/usr/lib/opm/usage.sh
+    . ${OPMDIR}/usr/lib/opm/main.sh
+    . ${OPMDIR}/usr/lib/opm/lib.sh
 
-# Source the libs
-. ${OPMDIR}/usr/lib/opm/util.sh
-. ${OPMDIR}/usr/lib/opm/stage.sh
-. ${OPMDIR}/usr/lib/opm/usage.sh
-. ${OPMDIR}/usr/lib/opm/main.sh
-. ${OPMDIR}/usr/lib/opm/lib.sh
+    # Execute special cases.
+    if [ "$1" = "sync" ] ; then
+        opm.sync
+    elif [ "$1" = "list" ] ; then
+        opm.list
+    elif [ -z "$2" ]; then
+        opm.usage
+    else
+        # Bootstrap and execute the main application.
+        . ${OPMDIR}/usr/lib/opm/bootstrap.sh
 
-# Execute special cases.
-if [ "$1" = "sync" ] ; then
-    opm.sync
-elif [ "$1" = "list" ] ; then
-    opm.list
-elif [ -z "$2" ]; then
-    opm.usage
-else
-    # Bootstrap and execute the main application.
-    . ${OPMDIR}/usr/lib/opm/bootstrap.sh
+        opm.main $@
+    fi
+}
 
-    opm.main $@
-fi
+export -f init
+su opm -c "init $*"
