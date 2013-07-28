@@ -155,14 +155,7 @@ opm.configure() {
     msg "Configuring source ..."
     cd "$BUILDDIR";
 
-    opm.util.configure \
-        --prefix=${CONFIG_PREFIX:=/usr} \
-        --mandir=/usr/share/man \
-        --infodir=/usr/share/info \
-        --datadir=/usr/share \
-        --sysconfdir=/etc \
-        --localstatedir=/var/lib \
-        --disable-dependency-tracking
+    opm.util.configure
 
     opm.stage.complete "configure"
 }

@@ -57,7 +57,7 @@ opm.util.source_file() {
 }
 
 opm.util.configure() {
-    [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure "$@" 2>&1 | tee ${SANDBOX}/configure.log
+    [ -e ${SOURCEDIR}/configure ] && try ${SOURCEDIR}/configure --prefix="${CONFIG_PREFIX:=/usr}" "$@" 2>&1 | tee ${SANDBOX}/configure.log
 }
 
 opm.util.source_opm() {
