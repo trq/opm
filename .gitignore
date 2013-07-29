@@ -1,3 +1,4 @@
 tags
 tmp/
 var/opm*
+etc/opm.conf
