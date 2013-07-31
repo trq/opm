@@ -1,4 +1,9 @@
 opm.stage.start() {
+    if [ "$1" == 'fetch' ] ; then
+        if opm.util.func_exists 'opm.pre'; then
+            opm.pre
+        fi
+    fi
     STAGE+=($1)
     opm.util.requires_dir ${STAGEDIR}
     touch "$STAGEDIR/$1-pending"
@@ -17,8 +22,8 @@ opm.stage.complete() {
 
     # Handle postmerge
     if [ "$1" == 'merge' ] ; then
-        if opm.util.func_exists 'opm.postmerge'; then
-            opm.postmerge
+        if opm.util.func_exists 'opm.post'; then
+            opm.post
         fi
     fi
 }
