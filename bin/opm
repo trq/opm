@@ -7,7 +7,7 @@ OPMDIR="`dirname ${OPM}`/.." ; export OPMDIR
 
 init() {
     # Create directory locations
-    OPMS="${OPMDIR}/var/opm/opms"
+    OPMS="${OPMDIR}/var/opm/repos"
     DISTDIR="${OPMDIR}/var/opm/distfiles"
     PKGDIR="${OPMDIR}/var/opm/packages"
     METADIR="${OPMDIR}/var/opm/meta"
