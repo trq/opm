@@ -64,11 +64,18 @@ opm.util.source_opm() {
     if ! [ -z ${PACKAGE_REVISION} ] ; then
         revision="_${PACKAGE_REVISION}"
     fi
-    if [ -e "$OPMS/$CATEGORY/$PACKAGE_NAME/base.opm" ]; then
-        opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "base.opm"
+
+    if ! [ -z "$REPOS" ] ; then
+        REPOS=( $(ls $OPMS) )
     fi
 
-    opm.util.source_file "$OPMS/$CATEGORY/$PACKAGE_NAME" "${PACKAGE_VERSION}${revision}.opm"
+    for REPO in ${REPOS[@]} ; do
+        if [ -e "$OPMS/$REPO/$CATEGORY/$PACKAGE_NAME/base.opm" ]; then
+            opm.util.source_file "$OPMS/$REPO/$CATEGORY/$PACKAGE_NAME" "base.opm"
+        fi
+
+        opm.util.source_file "$OPMS/$REPO/$CATEGORY/$PACKAGE_NAME" "${PACKAGE_VERSION}${revision}.opm"
+    done
 }
 
 opm.util.requires_dir() {
