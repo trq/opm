@@ -13,3 +13,5 @@ CONFIG_TARGET=$LFS_TGT
 CONFIG_PREFIX=/tools
 MAKEFLAGS='-j 2'; export MAKEFLAGS
 OPMLOG=$OPMDIR/var/opm.log
+
+REPOS=( "lfs-opms" )
