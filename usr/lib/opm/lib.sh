@@ -224,8 +224,4 @@ opm.merge() {
     fi
 
     opm.stage.complete "merge"
-
-    if opm.util.func_exists 'opm.postmerge'; then
-        opm.postmerge
-    fi
 }
